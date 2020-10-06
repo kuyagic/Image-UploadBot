@@ -21,11 +21,12 @@ async def start(client, message):
     
 @TGraph.on_message(filters.photo)
 async def getimage(client, message):
-    tmp = os.path.join("downloads",str(message.chat.id))
+    tmp = os.path.join("/data",str(message.chat.id))
     if not os.path.isdir(tmp):
         os.makedirs(tmp)
-    imgdir = tmp + "/" + str(message.message_id) +".jpg"
-    dwn = await message.reply_text("Downloading...", True)          
+    # imgdir = tmp + "/" + str(message.message_id) +".jpg"
+    imgdir = os.path.join(tmp, str(message.message_id), '.jpg')
+    dwn = await message.reply_text(f"Downloading... {imgdir}", True)          
     await client.download_media(
             message=message,
             file_name=imgdir
@@ -34,7 +35,7 @@ async def getimage(client, message):
     try:
         response = upload_file(imgdir)
     except Exception as error:
-        await dwn.edit_text(f"Oops something went wrong\n{error}")
+        await dwn.edit_text(f"Oops something went wrong\n{error},fl={imgdir}")
         return
     # await dwn.edit_text(f"https://telegra.ph{response[0]}")
     await dwn.edit_text(f"wst.duyao.de/blog-image{str(response[0]).replace('/file/','/')}")
