@@ -38,7 +38,7 @@ async def getimage(client, message):
         await dwn.edit_text(f"Oops something went wrong\n{error},fl={imgdir}")
         return
     # await dwn.edit_text(f"https://telegra.ph{response[0]}")
-    await dwn.edit_text(f"wst.duyao.de/blog-image{str(response[0]).replace('/file/','/')}")
+    await dwn.edit_text(f"{my.PREFIX}{str(response[0]).replace('/file/','/')}")
     shutil.rmtree(tmp,ignore_errors=True)
 
 
